@@ -6,7 +6,9 @@ const dbl = new DBL(DBL_API_KEY)
 const fs = require("fs");
 const db = require('quick.db');
 const jimp = require('jimp');
+const keepAlive = require("./keep_alive")
 
+keepAlive()
 bot.phone = new Collection();
 bot.commands = new Collection();
 bot.aliases = new Collection();
@@ -187,26 +189,4 @@ bot.on('guildMemberAdd', async member => {
 
 });
 
-const express = require("express");
-const app = express();
-
-const dreams = [
-  "Find and count some sheep",
-  "Climb a really tall mountain",
-  "Wash the dishes"
-];
-app.use(express.static("public"));
-
-app.get("/", (request, response) => {
-  response.sendFile(__dirname + "/views/index.html");
-});
-
-app.get("/dreams", (request, response) => {
-  response.json(dreams);
-});
-
-const listener = app.listen(process.env.PORT, () => {
-  console.log("Your app is listening on port " + listener.address().port);
-});
-
-bot.login(TOKEN);
+bot.login(process.env.TOKEN);
